@@ -7,7 +7,7 @@
     <property name="delimited.dataSetTitle" value="Demographics"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
-    <property name="src.data.dir" location="/home/daniela/Projects/data/child"/>
+    <property name="src.data.dir" location="data"/>
     <property name="delimited.includes" value="demographics.tsv"/>
     <property name="delimited.columns" value ="Patient.patientId,
     Patient.site,
@@ -22,7 +22,7 @@
     <property name="delimited.dataSetTitle" value="HealthReferral"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
-    <property name="src.data.dir" location="/home/daniela/Projects/data/child"/>
+    <property name="src.data.dir" location="data"/>
     <property name="delimited.includes" value="health_referral.tsv"/>
     <property name="delimited.columns" value ="Patient.patientId,Referral.referralDate,Referral.teamReferredTo" />
   </source>
@@ -31,7 +31,7 @@
     <property name="delimited.dataSetTitle" value="HealthDiagnosis"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
-    <property name="src.data.dir" location="/home/daniela/Projects/data/child"/>
+    <property name="src.data.dir" location="data"/>
     <property name="delimited.includes" value="health_diagnosis.tsv"/>
     <property name="delimited.columns" value ="Patient.patientId,
     Diagnosis.code,
@@ -42,7 +42,7 @@
     <property name="delimited.dataSetTitle" value="SocialServices"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
-    <property name="src.data.dir" location="/home/daniela/Projects/data/child"/>
+    <property name="src.data.dir" location="data"/>
     <property name="delimited.includes" value="socialservices_flags.tsv"/>
     <property name="delimited.columns" value ="Patient.patientId,
     Patient.safeguardingAlert,
