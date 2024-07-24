@@ -30,8 +30,17 @@ dependencies {
 }
 
 war {
-    dependsOn 'mergeProperties', 'summariseObjectStore', 'unwarBioWebApp', 'addStrutsConfig'
+    dependsOn 'declareExplodedWebApp', 'mergeProperties', 'summariseObjectStore', 'unwarBioWebApp', 'addStrutsConfig'
     finalizedBy 'warWebApp'
+}
+
+// https://github.com/intermine/intermine/issues/2162
+// Temporary fix until unwarBioWebApp in the intermine plugin is fixed
+task declareExplodedWebApp() {
+    outputs.dir "$explodedWebAppDir/donotdeleteme"
+    doLast{
+        mkdir "$explodedWebAppDir/donotdeleteme"
+    }
 }
 
 task warWebApp(type: War) {
