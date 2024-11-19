@@ -3,7 +3,7 @@
 <property name="common.os.prefix" value="common"/>
 <sources>
   <source name="Demographics" type="delimited">
-    <property name="delimited.dataSourceName" value="ChildrenData"/>
+    <property name="delimited.dataSourceName" value="Source1"/>
     <property name="delimited.dataSetTitle" value="Demographics"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
@@ -18,7 +18,7 @@
     Patient.ethnicity" />
   </source>
   <source name="HealthReferral" type="delimited">
-    <property name="delimited.dataSourceName" value="ChildrenData"/>
+    <property name="delimited.dataSourceName" value="Source2"/>
     <property name="delimited.dataSetTitle" value="HealthReferral"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
@@ -27,7 +27,7 @@
     <property name="delimited.columns" value ="Patient.patientId,Referral.referralDate,Referral.teamReferredTo" />
   </source>
   <source name="HealthDiagnosis" type="delimited">
-    <property name="delimited.dataSourceName" value="ChildrenData"/>
+    <property name="delimited.dataSourceName" value="Source3"/>
     <property name="delimited.dataSetTitle" value="HealthDiagnosis"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
@@ -38,7 +38,7 @@
     Diagnosis.name" />
   </source>
   <source name="SocialServices" type="delimited">
-    <property name="delimited.dataSourceName" value="ChildrenData"/>
+    <property name="delimited.dataSourceName" value="Source4"/>
     <property name="delimited.dataSetTitle" value="SocialServices"/>
     <property name="delimited.hasHeader" value="false"/>
     <property name="delimited.separator" value="tab"/>
