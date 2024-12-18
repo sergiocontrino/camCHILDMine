@@ -4,6 +4,10 @@ name: CamCHILDMine
 # yamllint disable-line rule:truthy
 on: push
 
+env:
+    INTERMINE_CHECKOUT: ${GITHUB_WORKSPACE}/docker-intermine-gradle
+
+
 jobs:
     camchildmine:
         runs-on: ubuntu-latest
@@ -23,18 +27,18 @@ jobs:
             - name: Make data dirs
               run: |
                   set -euo pipefail
-                  ${GITHUB_WORKSPACE}/mkdatadirs.sh
+                  ${INTERMINE_CHECKOUT}/mkdatadirs.sh
             - name: Up
               run: |
                   set -euo pipefail
-                  cd ${GITHUB_WORKSPACE}
+                  cd ${INTERMINE_CHECKOUT}
                   # Use run to trap any build errors early
                   # DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml run --rm intermine_builder
                   DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml up -d
             - name: Wait
               run: |
                   set -euo pipefail
-                  cd ${GITHUB_WORKSPACE}
+                  cd ${INTERMINE_CHECKOUT}
                   # Wait for builder to finish and return exit code
                   DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml wait intermine_builder
                   # Wait 15 minutes
@@ -49,7 +53,7 @@ jobs:
               if: failure()
               run: |
                   set -euo pipefail
-                  cd ${GITHUB_WORKSPACE}
+                  cd ${INTERMINE_CHECKOUT}
                   sleep 120
                   DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs intermine_builder
                   DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs postgres
