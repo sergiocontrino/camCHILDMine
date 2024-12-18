@@ -5,8 +5,7 @@ name: CamCHILDMine
 on: push
 
 env:
-    INTERMINE_CHECKOUT: ${GITHUB_WORKSPACE}/docker-intermine-gradle
-
+    INTERMINE_CHECKOUT: ${{ github.workspace }}/docker-intermine-gradle
 
 jobs:
     camchildmine:
