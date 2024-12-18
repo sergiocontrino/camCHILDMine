@@ -16,6 +16,7 @@ jobs:
               with:
                   repository: "ucam-department-of-psychiatry/docker-intermine-gradle"
                   ref: "docker-fix"
+                  path: "docker-intermine-gradle"
             - uses: actions/checkout@v4
               with:
                   path: "docker-intermine-gradle/data/mine/camCHILDMine"
