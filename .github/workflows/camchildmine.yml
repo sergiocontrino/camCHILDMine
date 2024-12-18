@@ -1,0 +1,56 @@
+---
+# yamllint disable rule:line-length
+name: CamCHILDMine
+# yamllint disable-line rule:truthy
+on: push
+
+jobs:
+    camchildmine:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Install prerequisites
+              run: |
+                  set -eux -o pipefail
+                  sudo apt -y install wait-for-it
+            - uses: actions/checkout@v4
+              with:
+                  repository: "ucam-department-of-psychiatry/docker-intermine-gradle"
+                  ref: "docker-fix"
+            - uses: actions/checkout@v4
+              with:
+                  path: "docker-intermine-gradle/data/mine/camCHILDMine"
+            - name: Make data dirs
+              run: |
+                  set -eux -o pipefail
+                  ${GITHUB_WORKSPACE}/mkdatadirs.sh
+            - name: Up
+              run: |
+                  set -eux -o pipefail
+                  cd ${GITHUB_WORKSPACE}
+                  # Use run to trap any build errors early
+                  # DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml run --rm intermine_builder
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml up -d
+            - name: Wait
+              run: |
+                  set -eux -o pipefail
+                  cd ${GITHUB_WORKSPACE}
+                  # Wait for builder to finish and return exit code
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) MINE_NAME=camCHILDMine docker compose -f local.docker-compose.yml wait intermine_builder
+                  # Wait 15 minutes
+                  wait-for-it localhost:9999 --timeout=900
+
+            - name: Check webapp
+              run: |
+                  set -eux -o pipefail
+                  curl -I -L --retry 10 --fail --insecure "http://localhost:9999/camchildmine/"
+
+            - name: Dump Docker logs
+              if: failure()
+              run: |
+                  set -eux -o pipefail
+                  cd ${GITHUB_WORKSPACE}
+                  sleep 120
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs intermine_builder
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs postgres
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs solr
+                  DOCKER_UID=$(id -u) DOCKER_GID=$(id -g) docker compose -f local.docker-compose.yml logs tomcat
